@@ -1,0 +1,26 @@
+{
+  "name": "crazydb/yii2-redis",
+  "description": "yii2 with phpredis",
+  "minimum-stability": "stable",
+  "license": "BSD",
+  "authors": [
+    {
+      "name": "CrazyDB",
+      "email": "xbzbing@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "~2.0.4",
+    "ext-redis": ">3.0.0",
+    "php": ">=5.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "dcb9\\redis\\": ""
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "<6.0",
+    "yiisoft/yii2-redis": "^2.0"
+  }
+}
