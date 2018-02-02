@@ -5,7 +5,7 @@
   "license": "BSD",
   "authors": [
     {
-      "name": "CrazyDB",
+      "name": "疯狂的dabing",
       "email": "xbzbing@gmail.com"
     }
   ],
@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "dcb9\\redis\\": ""
+      "crazydb\\redis\\": ""
     }
   },
   "require-dev": {
