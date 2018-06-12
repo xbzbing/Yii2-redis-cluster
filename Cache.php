@@ -7,10 +7,10 @@ use yii\di\Instance;
 /**
  * Redis Cache implements a cache application component based on [redis](http://redis.io/) key-value store.
  *
- * Redis Cache requires redis version 2.6.12 or higher to work properly.
+ * Redis Cache requires redis version 3.0.0 or higher to work properly.
  *
  * It needs to be configured with a redis [[Connection]] that is also configured as an application component.
- * By default it will use the `redis` application component.
+ * By default it will use the `redisCluster` application component.
  *
  * See [[Cache]] manual for common cache operations that redis Cache supports.
  *
@@ -48,26 +48,24 @@ use yii\di\Instance;
  * ~~~
  *
  */
-
 class Cache extends \yii\caching\Cache
 {
     /**
-     * @var Connection|string|array the Redis [[Connection]] object or the application component ID of the Redis [[Connection]].
-     * This can also be an array that is used to create a redis [[Connection]] instance in case you do not want do configure
-     * redis connection as an application component.
+     * @var Connection|string|array the RedisCluster [[Connection]] object or the application component ID of the RedisCluster [[Connection]].
+     * This can also be an array that is used to create a RedisCluster [[Connection]] instance in case you do not want do configure
+     * RedisCluster connection as an application component.
      * After the Cache object is created, if you want to change this property, you should only assign it
-     * with a Redis [[Connection]] object.
+     * with a RedisCluster [[Connection]] object.
      */
     public $redisCluster = 'redisCluster';
 
     /**
-     * Initializes the redis Cache component.
-     * This method will initialize the [[redis]] property to make sure it refers to a valid redis connection.
-     * @throws \yii\base\InvalidConfigException if [[redis]] is invalid.
+     * Initializes the redisCluster Cache component.
+     * This method will initialize the [[redisCluster]] property to make sure it refers to a valid RedisCluster connection.
+     * @throws \yii\base\InvalidConfigException if [[redisCluster]] is invalid.
      */
     public function init()
     {
-        parent::init();
         $this->redisCluster = Instance::ensure($this->redisCluster, Connection::className());
     }
 
@@ -78,7 +76,6 @@ class Cache extends \yii\caching\Cache
     public function exists($key)
     {
         $key = $this->buildKey($key);
-
         return (bool)$this->redisCluster->exists($key);
     }
 
@@ -97,7 +94,7 @@ class Cache extends \yii\caching\Cache
     protected function getValues($keys)
     {
         $keyMap = [];
-        foreach ($keys as $key){
+        foreach ($keys as $key) {
             $keyMap[$key] = $this->buildKey($key);
         }
         $response = $this->redisCluster->mget(array_values($keyMap));
@@ -131,7 +128,7 @@ class Cache extends \yii\caching\Cache
         $failedKeys = [];
         $dataMap = [];
         $keyMap = [];
-        foreach ($data as $key => $value){
+        foreach ($data as $key => $value) {
             $t = $this->buildKey($key);
             $dataMap[$t] = $value;
             $keyMap[$t] = $key;

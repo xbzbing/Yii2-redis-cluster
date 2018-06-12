@@ -1,7 +1,7 @@
 Yii2-redis-cluster
 ======================
 
-`yiisoft/Yii2-redis` 只支持单机`redis`，因为近期的需求是在`cluster`模式下使用，所以简单包装一个轮子。
+由于`yiisoft/Yii2-redis` 只支持单机`redis`，但近期的需求是在`cluster`模式下使用，所以简单包装一个轮子。
 
 **扩展仅支持`cluster`集群模式**
 
