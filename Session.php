@@ -75,8 +75,6 @@ class Session extends \yii\web\Session
         if ($this->keyPrefix === null) {
             $this->keyPrefix = substr(md5(Yii::$app->id), 0, 5);
         }
-        $this->redisCluster->open();
-
         parent::init();
     }
 
