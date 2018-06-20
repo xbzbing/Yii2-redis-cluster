@@ -73,7 +73,7 @@ class Session extends \yii\web\Session
     {
         $this->redisCluster = Instance::ensure($this->redisCluster, Connection::className());
         if ($this->keyPrefix === null) {
-            $this->keyPrefix = substr(md5(Yii::$app->id), 0, 5);
+            $this->keyPrefix = substr(md5(Yii::$app->id), 0, 5) . ':session:';
         }
         parent::init();
     }

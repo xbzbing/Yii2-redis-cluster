@@ -60,6 +60,14 @@ class Cache extends \yii\caching\Cache
     public $redisCluster = 'redisCluster';
 
     /**
+     * @var string a string prefixed to every cache key so that it is unique. If not set,
+     * it will use a prefix generated from [[Application::id]]. You may set this property to be an empty string
+     * if you don't want to use key prefix. It is recommended that you explicitly set this property to some
+     * static value if the cached data needs to be shared among multiple applications.
+     */
+    public $keyPrefix;
+
+    /**
      * Initializes the redisCluster Cache component.
      * This method will initialize the [[redisCluster]] property to make sure it refers to a valid RedisCluster connection.
      * @throws \yii\base\InvalidConfigException if [[redisCluster]] is invalid.
@@ -67,6 +75,9 @@ class Cache extends \yii\caching\Cache
     public function init()
     {
         $this->redisCluster = Instance::ensure($this->redisCluster, Connection::className());
+        if ($this->keyPrefix === null) {
+            $this->keyPrefix = substr(md5(Yii::$app->id), 0, 5) . ':cache:';
+        }
     }
 
 
