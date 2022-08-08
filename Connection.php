@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Component;
 use yii\base\UnknownMethodException;
 use RedisCluster;
+use Exception;
 
 /**
  * Class Connection
@@ -186,6 +187,16 @@ class Connection extends Component
     public $hosts = [];
 
     /**
+     * @var string redis cluster auth, default is NULL.
+     */
+    public $auth = null;
+
+    /**
+     * @var bool persistent link or not, default is false.
+     */
+    public $persistent = false;
+
+    /**
      * @var RedisCluster
      */
     protected $instance;
@@ -197,7 +208,7 @@ class Connection extends Component
      */
     public function init()
     {
-        $this->instance = new RedisCluster(null, $this->hosts, $this->connectionTimeout, $this->readTimeout);
+        $this->instance = new RedisCluster(null, $this->hosts, $this->connectionTimeout, $this->readTimeout, $this->persistent, $this->auth);
     }
 
     /**
@@ -208,7 +219,7 @@ class Connection extends Component
     {
         try {
             return $this->instance->ping($nodeParams) === '+PONG';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Yii::error('error on auth:' . $e->getMessage());
             return false;
         }
