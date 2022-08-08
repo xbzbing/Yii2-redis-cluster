@@ -2,7 +2,7 @@
   "name": "crazydb/yii2-redis-cluster",
   "description": "yii2 with phpredis",
   "minimum-stability": "stable",
-  "license": "BSD",
+  "license": "GPL-3.0-or-later",
   "authors": [
     {
       "name": "疯狂的dabing",
